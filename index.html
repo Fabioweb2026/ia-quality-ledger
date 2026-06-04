@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>IA Quality Ledger</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f2f2f2; }
+    form { margin-bottom: 20px; }
+    input, select, textarea { margin: 5px; padding: 5px; }
+  </style>
+</head>
+<body>
+  <h1>IA Quality Ledger</h1>
+  
+  <form id="form">
+    <input type="text" id="promptId" placeholder="Prompt ID" required>
+    <textarea id="resposta" placeholder="Resposta da IA" required></textarea>
+    <select id="nota" required>
+      <option value="">Nota 1-5</option>
+      <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+    </select>
+    <select id="tipoErro">
+      <option value="">Sem erro</option>
+      <option>Factualidade</option>
+      <option>Idioma/PT-BR</option>
+      <option>Segurança</option>
+      <option>Instrução</option>
+      <option>Formato</option>
+    </select>
+    <input type="text" id="comentario" placeholder="Comentário">
+    <button type="submit">Adicionar</button>
+  </form>
 
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Prompt ID</th>
+        <th>Resposta IA</th>
+        <th>Nota</th>
+        <th>Tipo de Erro</th>
+        <th>Comentário</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">Média Geral:</td>
+        <td id="mediaNota">0</td>
+        <td colspan="2"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+<script>
+let totalNotas = 0;
+let qtdAval = 0;
+
+document.getElementById('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const data = new Date().toLocaleDateString('pt-BR');
+  const promptId = document.getElementById('promptId').value;
+  const resposta = document.getElementById('resposta').value;
+  const nota = document.getElementById('nota').value;
+  const tipoErro = document.getElementById('tipoErro').value;
+  const comentario = document.getElementById('comentario').value;
+
+  const row = `<tr>
+    <td>${data}</td>
+    <td>${promptId}</td>
+    <td>${resposta}</td>
+    <td>${nota}</td>
+    <td>${tipoErro}</td>
+    <td>${comentario}</td>
+  </tr>`;
+  
+  document.getElementById('tbody').insertAdjacentHTML('beforeend', row);
+
+  totalNotas += Number(nota);
+  qtdAval += 1;
+  document.getElementById('mediaNota').innerText = (totalNotas / qtdAval).toFixed(2);
+
+  e.target.reset();
+});
+</script>
+</body>
+</html>
