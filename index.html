@@ -2,118 +2,80 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>IA Quality Ledger</title>
+  <title>IA Quality Ledger - Enterprise Portal</title>
   <style>
-  <style>
-    /* Estilização Temática: Dark Cyber-Enterprise Mode */
+    /* Estilização Base e Tema Dark Moderno */
     body { 
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif; 
-      padding: 30px; 
-      background-color: #0d1117; /* Fundo escuro padrão GitHub/Plataformas de IA */
-      color: #c9d1d9; /* Texto claro de alta legibilidade */
-      max-width: 1200px;
-      margin: 0 auto;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; 
+      padding: 0; margin: 0;
+      background-color: #0d1117; 
+      color: #c9d1d9; 
     }
-
-    /* Logotipo Estilizado em Texto e Título */
-    .header-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid #21262d;
-      padding-bottom: 20px;
-      margin-bottom: 25px;
-    }
-    .logo-icon {
-      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-      color: #0d1117;
-      font-weight: 800;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 18px;
-      letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(79, 172, 254, 0.4);
-    }
-    h1 { 
-      color: #ffffff; 
-      margin: 0; 
-      font-size: 28px; 
-      font-weight: 700;
-      background: linear-gradient(to right, #ffffff, #8b949e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 30px; }
     
-    /* Grid de Estatísticas (Cards em Neon Sutil) */
+    /* Gerenciador de Views/Telas */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* --- ESTILO 1: LANDING PAGE (PORTAL INSTITUCIONAL) --- */
+    .hero-section { text-align: center; padding: 60px 20px; border-bottom: 1px solid #21262d; }
+    .hero-section h1 { 
+      font-size: 42px; margin: 0; font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #8b949e 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-section p { color: #8b949e; font-size: 18px; max-width: 600px; margin: 15px auto 0 auto; }
+    
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+    .service-card { background: #161b22; padding: 25px; border-radius: 10px; border: 1px solid #30363d; }
+    .service-card h3 { color: #58a6ff; margin-top: 0; }
+
+    .access-portal { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 40px; margin-top: 5px; text-align: center; }
+    .access-portal h2 { margin-top: 0; color: #ffffff; }
+    .btn-portal { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); color: #0d1117; padding: 14px 30px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; font-size: 16px; margin-top: 15px; box-shadow: 0 0 15px rgba(79,172,254,0.3); }
+
+    /* --- ESTILO 2: TELA DE LOGIN --- */
+    .login-box { max-width: 400px; margin: 100px auto; background: #161b22; border: 1px solid #30363d; padding: 35px; border-radius: 10px; text-align: center; }
+    .login-box h2 { color: #ffffff; margin-top: 0; }
+    .login-box p { color: #8b949e; font-size: 14px; margin-bottom: 25px; }
+    .login-box input, .login-box select { width: 100%; box-sizing: border-box; padding: 12px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; }
+    .btn-login { width: 100%; padding: 12px; background: #238636; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .btn-back { display: block; margin-top: 15px; color: #58a6ff; text-decoration: none; font-size: 14px; cursor: pointer; }
+
+    /* --- ESTILO 3: PAINEL DO LEDGER (SEU SISTEMA) --- */
+    .header-container { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #21262d; padding-bottom: 20px; margin-bottom: 25px; }
+    .logo-block { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); color: #0d1117; font-weight: 800; padding: 8px 14px; border-radius: 8px; font-size: 18px; }
+    .logo-block h1 { color: #ffffff; margin: 0; font-size: 24px; }
+    .user-info { display: flex; align-items: center; gap: 15px; }
+    .role-badge { background: #21262d; padding: 4px 10px; border-radius: 20px; font-size: 12px; border: 1px solid #30363d; color: #58a6ff; font-weight: bold; }
+    .btn-logout { background: #da3637; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: bold; }
+    
+    /* Grid de Estatísticas e Forms */
     .stats-container { display: flex; gap: 20px; margin-bottom: 25px; }
-    .stat-card { 
-      background: #161b22; 
-      padding: 20px; 
-      border-radius: 10px; 
-      border: 1px solid #30363d;
-      flex: 1; 
-      text-align: center;
-      transition: transform 0.2s;
-    }
-    .stat-card:hover {
-      transform: translateY(-2px);
-      border-color: #4facfe;
-    }
-    .stat-card h3 { margin: 0; color: #8b949e; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card { background: #161b22; padding: 20px; border-radius: 10px; border: 1px solid #30363d; flex: 1; text-align: center; }
+    .stat-card h3 { margin: 0; color: #8b949e; font-size: 13px; text-transform: uppercase; }
     .stat-card p { margin: 8px 0 0 0; font-size: 28px; font-weight: bold; color: #58a6ff; }
 
-    /* Formulário Estilizado (Dark Surface) */
-    form { 
-      background: #161b22; 
-      padding: 25px; 
-      border-radius: 10px; 
-      border: 1px solid #30363d;
-      margin-bottom: 35px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-    }
+    form { background: #161b22; padding: 25px; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 35px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .full-width { grid-column: span 2; }
-    
-    /* Inputs Estilo Terminal Moderno */
-    input, select, textarea { 
-      padding: 12px; 
-      background-color: #0d1117;
-      border: 1px solid #30363d; 
-      border-radius: 6px; 
-      font-size: 14px;
-      color: #c9d1d9;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #58a6ff;
-      box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.15);
-    }
-    ::placeholder { color: #484f58; }
+    input, select, textarea { padding: 12px; background-color: #0d1117; border: 1px solid #30363d; border-radius: 6px; font-size: 14px; color: #c9d1d9; outline: none; }
     textarea { height: 90px; resize: vertical; }
     
-    /* Botões */
-    .btn-container { grid-column: span 2; display: flex; gap: 12px; margin-top: 5px; }
-    button { 
-      padding: 12px 24px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;
-      transition: filter 0.2s;
-    }
-    button[type="submit"] { background: #238636; color: #ffffff; }
-    button.btn-export { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
-    button:hover { filter: brightness(1.15); }
+    .btn-container { grid-column: span 2; display: flex; gap: 12px; }
+    button.btn-add { background: #238636; color: #ffffff; border: none; border-radius: 6px; padding: 12px 24px; font-weight: 600; cursor: pointer; }
+    button.btn-export { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; padding: 12px 24px; cursor: pointer; }
+    
+    .filters-container { display: flex; gap: 15px; margin-bottom: 20px; }
+    .filters-container input { flex: 2; }
+    .filters-container select { flex: 1; }
 
-    /* Tabela de Auditoria Dark */
-    .table-container { 
-      background: #161b22; 
-      border-radius: 10px; 
-      border: 1px solid #30363d; 
-      overflow: hidden; 
-    }
+    .table-container { background: #161b22; border-radius: 10px; border: 1px solid #30363d; overflow: hidden; }
     table { border-collapse: collapse; width: 100%; }
     th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid #21262d; font-size: 14px; }
-    th { background: #1f242c; color: #f0f6fc; font-weight: 600; }
-    tr:hover { background-color: #1f242c; }
+    th { background: #1f242c; color: #f0f6fc; }
     
-    /* Badges com Brilho Sutil (Otimizadas para Fundo Escuro) */
+    /* Badges de Erro */
     .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; }
     .badge-factualidade { background: rgba(248, 81, 73, 0.15); color: #ff7b72; border: 1px solid rgba(248, 81, 73, 0.3); }
     .badge-idioma { background: rgba(210, 153, 34, 0.15); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
@@ -125,206 +87,90 @@
 </head>
 <body>
 
-  <h1>IA Quality Ledger</h1>
-  <!-- Cabeçalho com o Logotipo em Texto Integrado -->
-  <div class="header-container">
- <div class="stat-card">
-      <h3>Média Geral</h3>
-      <p id="mediaNota">0.00</p>
-    </div>
-    <div class="stat-card">
-      <h3>Total de Avaliações</h3>
-      <p id="totalAvaliacoes">0</p>
+  <!-- ================= TELA 1: PORTAL INSTITUCIONAL ================= -->
+  <div id="view-landing" class="view active">
+    <div class="container">
+      <div class="hero-section">
+        <h1>IA QUALITY LEDGER</h1>
+        <p>Soluções corporativas avançadas para auditoria, governança, rastreabilidade e melhoria contínua de modelos LLM.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Auditoria de Qualidade</h3>
+          <p>Validação criteriosa de saídas de inteligência artificial com categorização granular de incidentes.</p>
+        </div>
+        <div class="service-card">
+          <h3>Métricas de Ética e Viés</h3>
+          <p>Mapeamento de desvios operacionais com geração automática de relatórios de conformidade regulatória.</p>
+        </div>
+        <div class="service-card">
+          <h3>Segurança e Red Teaming</h3>
+          <p>Supervisão ativa contra jailbreaks, vazamento de contexto ou violações de diretrizes de IA.</p>
+        </div>
+      </div>
+
+      <div class="access-portal">
+        <h2>Painel Operacional do Sistema</h2>
+        <p>Acesse o livro-razão de qualidade corporativo para gerenciar avaliações e exportar dados estatísticos.</p>
+        <button class="btn-portal" onclick="mudarTela('view-login')">Entrar no Sistema Ledger</button>
+      </div>
     </div>
   </div>
-  <form id="form">
-    <input type="text" id="promptId" placeholder="Prompt ID" required>
-    <select id="nota" required>
-      <option value="">Nota 1-5</option>
-      <option value="1">1</option><option value="2">2</option>
-      <option value="3">3</option><option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-    <textarea id="resposta" class="full-width" placeholder="Resposta da IA" required></textarea>
-    
-    <!-- Campo de erro envelopado em uma div para controle fácil -->
-    <div id="wrapperErro" style="display: flex; flex-direction: column;">
-      <select id="tipoErro">
-        <option value="">Sem erro</option>
-        <option value="Factualidade">Factualidade</option>
-        <option value="Idioma/PT-BR">Idioma/PT-BR</option>
-        <option value="Segurança">Segurança</option>
-        <option value="Instrução">Instrução</option>
-        <option value="Formato">Formato</option>
+
+  <!-- ================= TELA 2: FORMULÁRIO DE LOGIN ================= -->
+  <div id="view-login" class="view">
+    <div class="login-box">
+      <h2>Acesso ao Ledger</h2>
+      <p>Insira suas credenciais de homologação interna.</p>
+      
+      <input type="text" id="usuario" placeholder="Nome de Usuário (Ex: gabriel)">
+      <input type="password" id="senha" placeholder="Senha (Ex: 1234)">
+      
+      <select id="perfilAcesso">
+        <option value="Auditor Técnico">Perfil: Auditor Técnico</option>
+        <option value="Administrador Global">Perfil: Administrador Global</option>
       </select>
-    </div>
-    <input type="text" id="comentario" placeholder="Comentário do auditor">
-    
-    <div class="btn-container">
-      <button type="submit">Adicionar Log</button>
-      <button type="button" class="btn-export" onclick="exportCSV()">Exportar CSV</button>
-    </div>
-  <!-- Barra de Filtros e Busca Dinâmica -->
-  <div class="filters-container">
-    <input type="text" id="buscaPrompt" placeholder="🔍 Buscar por Prompt ID..." oninput="filtrarRegistros()">
-    
-    <select id="filtroNota" onchange="filtrarRegistros()">
-      <option value="">⭐ Todas as Notas</option>
-      <option value="1">Nota 1</option>
-      <option value="2">Nota 2</option>
-      <option value="3">Nota 3</option>
-      <option value="4">Nota 4</option>
-      <option value="5">Nota 5</option>
-    </select>
 
-    <select id="filtroErro" onchange="filtrarRegistros()">
-      <option value="">⚠️ Todos os Status/Erros</option>
-      <option value="Sem erro">Sem erro</option>
-      <option value="Factualidade">Factualidade</option>
-      <option value="Idioma/PT-BR">Idioma/PT-BR</option>
-      <option value="Segurança">Segurança</option>
-      <option value="Instrução">Instrução</option>
-      <option value="Formato">Formato</option>
-    </select>
-  </div>
-  </form>
-
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Prompt ID</th>
-          <th>Resposta IA</th>
-          <th>Nota</th>
-          <th>Tipo de Erro</th>
-          <th>Comentário</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
+      <button class="btn-login" onclick="executarLogin()">Autenticar Portal</button>
+      <a class="btn-back" onclick="mudarTela('view-landing')">← Voltar à página inicial</a>
+    </div>
   </div>
 
-<script>
-// Array global que gerencia os dados da aplicação
-let registros = [];
-
-// Carrega os dados salvos no navegador assim que a página abre
-window.addEventListener('DOMContentLoaded', () => {
-  const dadosSalvos = localStorage.getItem('ia_quality_ledger_logs');
-  if (dadosSalvos) {
-    registros = JSON.parse(dadosSalvos);
-    renderizarTabela();
-    atualizarEstatisticas();
-  }
-});
-
-// UX Dinâmica: Oculta o campo de erro se a nota for máxima (5)
-document.getElementById('nota').addEventListener('change', function() {
-  const wrapperErro = document.getElementById('wrapperErro');
-  const tipoErro = document.getElementById('tipoErro');
-  
-  if (this.value === "5") {
-    tipoErro.value = ""; // Reseta para sem erro
-    wrapperErro.style.visibility = "hidden"; // Esconde visualmente mantendo o layout
-  } else {
-    wrapperErro.style.visibility = "visible";
-  }
-});
-
-// Captura o envio do formulário
-document.getElementById('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const novoRegistro = {
-    data: new Date().toLocaleDateString('pt-BR'),
-    promptId: document.getElementById('promptId').value,
-    resposta: document.getElementById('resposta').value,
-    nota: Number(document.getElementById('nota').value),
-    tipoErro: document.getElementById('tipoErro').value || "Sem erro",
-    comentario: document.getElementById('comentario').value || "-"
-  };
-
-  registros.push(novoRegistro);
-  
-  // Salva no LocalStorage (Navegador)
-  localStorage.setItem('ia_quality_ledger_logs', JSON.stringify(registros));
-
-  // Atualiza a tela
-  renderizarTabela();
-  atualizarEstatisticas();
-
-  // Reseta o formulário e força a exibição do bloco de erros novamente
-  e.target.reset();
-  document.getElementById('wrapperErro').style.visibility = "visible";
-});
-
-// Função para desenhar as linhas na tabela com base no array
-function renderizarTabela() {
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = ""; // Limpa a tabela antes de redesenhar
-
-  registros.forEach(reg => {
-    // Escolhe a classe CSS certa para colorir o badge do erro
-    let classeBadge = "badge-sem-erro";
-    if (reg.tipoErro.includes("Factualidade")) classeBadge = "badge-factualidade";
-    if (reg.tipoErro.includes("Idioma")) classeBadge = "badge-idioma";
-    if (reg.tipoErro.includes("Segurança")) classeBadge = "badge-seguranca";
-    if (reg.tipoErro.includes("Instrução")) classeBadge = "badge-instrucao";
-    if (reg.tipoErro.includes("Formato")) classeBadge = "badge-formato";
-
-    const row = `<tr>
-      <td>${reg.data}</td>
-      <td><strong>${reg.promptId}</strong></td>
-      <td>${reg.resposta}</td>
-      <td><strong>${reg.nota}</strong>/5</td>
-      <td><span class="badge ${classeBadge}">${reg.tipoErro}</span></td>
-      <td>${reg.comentario}</td>
-    </tr>`;
-    tbody.insertAdjacentHTML('beforeend', row);
-  });
-}
-
-// Recalcula os indicadores do topo
-function atualizarEstatisticas() {
-  const totalAvaliacoes = registros.length;
-  document.getElementById('totalAvaliacoes').innerText = totalAvaliacoes;
-
-  if (totalAvaliacoes === 0) {
-    document.getElementById('mediaNota').innerText = "0.00";
-    return;
-  }
-
-  const somaNotas = registros.reduce((acc, curr) => acc + curr.nota, 0);
-  const media = (somaNotas / totalAvaliacoes).toFixed(2);
-  document.getElementById('mediaNota').innerText = media;
-}
-
-// Exportador para CSV estruturado
-function exportCSV() {
-  if (registros.length === 0) {
-    alert("Não há dados para exportar!");
-    return;
-  }
-
-  // Cabeçalho com codificação UTF-8 para não quebrar acentos no Excel
-  let csvContent = "\uFEFFData;Prompt ID;Resposta IA;Nota;Tipo de Erro;Comentario\n";
-  
-  registros.forEach(reg => {
-    // Limpa quebras de linhas nas respostas para não quebrar o arquivo CSV
-    const respostaLimpa = reg.resposta.replace(/[\n\r]/g, " ");
-    csvContent += `${reg.data};${reg.promptId};"${respostaLimpa}";${reg.nota};${reg.tipoErro};"${reg.comentario}"\n`;
-  });
-
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", "ia_quality_ledger_report.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-</script>
-</body>
-</html>
+  <!-- ================= TELA 3: PAINEL LEDGER (LOGS) ================= -->
+  <div id="view-dashboard" class="view">
+    <div class="container">
+      <div class="header-container">
+        <div class="logo-block">
+          <div class="logo-icon">QL</div>
+          <h1>IA Quality Ledger</h1>
+        </div>
+        <div class="user-info">
+          <span id="labelUsuario" style="font-weight: bold;">Usuário</span>
+          <span id="badgePerfil" class="role-badge">Perfil</span>
+          <button class="btn-logout" onclick="executarLogout()">Encerrar Sessão</button>
+        </div>
+      </div>
+      
+      <!-- Seção do Formulário de Auditoria -->
+      <div id="blocoFormulario">
+        <form id="form">
+          <input type="text" id="promptId" placeholder="Prompt ID" required>
+          <select id="nota" required>
+            <option value="">Nota 1-5</option>
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <textarea id="resposta" class="full-width" placeholder="Resposta da IA" required></textarea>
+          
+          <div id="wrapperErro" style="display: flex; flex-direction: column;">
+            <select id="tipoErro">
+              <option value="">Sem erro</option>
+              <option value="Factualidade">Factualidade</option>
+              <option value="Idioma/PT-BR">Idioma/PT-BR</option>
+              <option value="Segurança">Segurança</option>
+              <option value="Instrução">Instrução</option>
+              <option value="Formato">Formato</option>
+            </select>
+          </div>
