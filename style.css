@@ -1,1 +1,37 @@
+body { 
+  font-family: Arial; 
+  padding: 20px; 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  margin: 0;
+}
 
+h1 {
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+table, form {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+th { 
+  background: #667eea; 
+  color: white;
+}
+
+button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  background: #5568d3;
+}
