@@ -128,8 +128,6 @@
   <h1>IA Quality Ledger</h1>
   <!-- Cabeçalho com o Logotipo em Texto Integrado -->
   <div class="header-container">
-    <div class="logo-icon">QL</div>
-    <h1>IA Quality Ledger</h1>
  <div class="stat-card">
       <h3>Média Geral</h3>
       <p id="mediaNota">0.00</p>
@@ -166,6 +164,29 @@
       <button type="submit">Adicionar Log</button>
       <button type="button" class="btn-export" onclick="exportCSV()">Exportar CSV</button>
     </div>
+  <!-- Barra de Filtros e Busca Dinâmica -->
+  <div class="filters-container">
+    <input type="text" id="buscaPrompt" placeholder="🔍 Buscar por Prompt ID..." oninput="filtrarRegistros()">
+    
+    <select id="filtroNota" onchange="filtrarRegistros()">
+      <option value="">⭐ Todas as Notas</option>
+      <option value="1">Nota 1</option>
+      <option value="2">Nota 2</option>
+      <option value="3">Nota 3</option>
+      <option value="4">Nota 4</option>
+      <option value="5">Nota 5</option>
+    </select>
+
+    <select id="filtroErro" onchange="filtrarRegistros()">
+      <option value="">⚠️ Todos os Status/Erros</option>
+      <option value="Sem erro">Sem erro</option>
+      <option value="Factualidade">Factualidade</option>
+      <option value="Idioma/PT-BR">Idioma/PT-BR</option>
+      <option value="Segurança">Segurança</option>
+      <option value="Instrução">Instrução</option>
+      <option value="Formato">Formato</option>
+    </select>
+  </div>
   </form>
 
   <div class="table-container">
