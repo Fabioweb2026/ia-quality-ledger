@@ -1,4 +1,16 @@
 <style>
+    /* Estilização da Barra de Filtros */
+    .filters-container {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .filters-container input {
+      flex: 2; /* Deixa a barra de busca mais larga */
+    }
+    .filters-container select {
+      flex: 1;
+    }
 body { 
   font-family: 'Segoe UI', Arial, sans-serif; 
   padding: 30px; 
