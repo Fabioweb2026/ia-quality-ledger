@@ -57,5 +57,47 @@ function exportCSV() {
 }
 
 // Carrega dados ao abrir a página
-renderTabela();
+// Nova função que decide quais registros devem aparecer na tela
+function filtrarRegistros() {
+  const termoBusca = document.getElementById('buscaPrompt').value.toLowerCase();
+  const notaSelecionada = document.getElementById('filtroNota').value;
+  const erroSelecionado = document.getElementById('filtroErro').value;
+
+  // Filtra o array principal com base nos 3 critérios ao mesmo tempo
+  const registrosFiltrados = registros.filter(reg => {
+    const bateuPrompt = reg.promptId.toLowerCase().includes(termoBusca);
+    const bateuNota = notaSelecionada === "" || reg.nota === Number(notaSelecionada);
+    const bateuErro = erroSelecionado === "" || reg.tipoErro === erroSelecionado;
+
+    return bateuPrompt && bateuNota && bateuErro;
+  });
+
+  // Passa os itens filtrados para serem desenhados na tabela
+  renderizarTabela(registrosFiltrados);
+}
+
+// Função de desenho atualizada para aceitar listas filtradas
+function renderizarTabela(listaParaExibir = registros) {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = ""; // Limpa a tabela antes de redesenhar
+
+  listaParaExibir.forEach(reg => {
+    let classeBadge = "badge-sem-erro";
+    if (reg.tipoErro.includes("Factualidade")) classeBadge = "badge-factualidade";
+    if (reg.tipoErro.includes("Idioma")) classeBadge = "badge-idioma";
+    if (reg.tipoErro.includes("Segurança")) classeBadge = "badge-seguranca";
+    if (reg.tipoErro.includes("Instrução")) classeBadge = "badge-instrucao";
+    if (reg.tipoErro.includes("Formato")) classeBadge = "badge-formato";
+
+    const row = `<tr>
+      <td>${reg.data}</td>
+      <td><strong>${reg.promptId}</strong></td>
+      <td>${reg.resposta}</td>
+      <td><strong>${reg.nota}</strong>/5</td>
+      <td><span class="badge ${classeBadge}">${reg.tipoErro}</span></td>
+      <td>${reg.comentario}</td>
+    </tr>`;
+    tbody.insertAdjacentHTML('beforeend', row);
+  });
+}
 </script>
