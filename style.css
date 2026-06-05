@@ -1,37 +1,82 @@
+<style>
 body { 
-  font-family: Arial; 
-  padding: 20px; 
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif; 
+  padding: 30px; 
+  background: url('https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=2070') no-repeat center fixed;
+  background-size: cover;
   margin: 0;
+  min-height: 100vh;
+}
+
+/* Camada escura pra texto ficar legível sobre a imagem */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.7);
+  z-index: -1;
 }
 
 h1 {
-  color: white;
+  color: #fff;
   text-align: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
-table, form {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+form, table {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  max-width: 1000px;
+  margin: 0 auto 25px;
 }
 
-th { 
-  background: #667eea; 
-  color: white;
+/* Deixa inputs e botões na mesma linha e mesma altura */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+input, select, textarea, button {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 42px; /* mesma altura pra todos */
+  box-sizing: border-box;
+}
+
+textarea {
+  flex: 1 1 250px;
+  min-width: 250px;
+}
+
+input, select {
+  flex: 1 1 150px;
 }
 
 button {
-  background: #667eea;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
+  flex: 0 0 auto;
+  transition: transform 0.1s;
 }
 button:hover {
-  background: #5568d3;
+  transform: translateY(-2px);
 }
+
+th { 
+  background: #6366f1; 
+  color: white;
+  padding: 12px;
+}
+td { padding: 10px; }
+</style>
